@@ -1,7 +1,14 @@
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using P1API.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<DetailTECContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
 
 var app = builder.Build();
 
