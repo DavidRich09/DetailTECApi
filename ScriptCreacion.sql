@@ -11,7 +11,6 @@ CREATE TABLE lavacar.Trabajador(
 	nacimiento DATE,
 	edad INT,
 	ingreso DATE,
-	UNIQUE (t_password)
 );
 
 CREATE TABLE lavacar.sucursal(
