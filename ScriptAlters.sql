@@ -8,9 +8,15 @@ ALTER TABLE lavacar.dir_cliente
 ADD CONSTRAINT FK_dirs_clientes FOREIGN KEY (ced_cliente)
 REFERENCES lavacar.cliente (cedula);
 
+ALTER TABLE lavacar.dir_cliente
+ADD CONSTRAINT PK_dirsc PRIMARY KEY (direccion, ced_cliente)
+
 ALTER TABLE lavacar.tel_cliente
 ADD CONSTRAINT FK_tels_clientes FOREIGN KEY (ced_cliente)
 REFERENCES lavacar.cliente (cedula);
+
+ALTER TABLE lavacar.tel_cliente
+ADD CONSTRAINT PK_telsc PRIMARY KEY (telefono, ced_cliente)
 
 ALTER TABLE lavacar.cita
 ADD CONSTRAINT FK_tipolavadocita FOREIGN KEY (tipo_lavado)
@@ -34,6 +40,9 @@ ADD CONSTRAINT PK_Citas PRIMARY KEY (placa_vehiculo,fecha);
 ALTER TABLE lavacar.personal_lavado
 ADD CONSTRAINT FK_RolLavado FOREIGN KEY (tipo_lavado)
 REFERENCES lavacar.lavado (tipo_lavado);
+
+ALTER TABLE lavacar.personal_lavado
+ADD CONSTRAINT PK_PersonalLavado PRIMARY KEY (tipo_lavado,rol)
 
 ALTER TABLE lavacar.producto
 ADD CONSTRAINT FK_CedProveedor FOREIGN KEY (ced_proveedor)

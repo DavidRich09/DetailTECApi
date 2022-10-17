@@ -43,12 +43,12 @@ CREATE TABLE lavacar.cliente(
 );
 
 CREATE TABLE lavacar.dir_cliente(
-	direccion VARCHAR(225),
+	direccion VARCHAR(225) NOT NULL,
 	ced_cliente INT IDENTITY (1,1),
 );
 
 CREATE TABLE lavacar.tel_cliente(
-	telefono INT,
+	telefono INT NOT NULL,
 	ced_cliente INT IDENTITY (1,1),
 );
 
@@ -71,8 +71,9 @@ CREATE TABLE lavacar.lavado(
 );
 
 CREATE TABLE lavacar.personal_lavado(
-	tipo_lavado VARCHAR(100),
-	rol VARCHAR(100),
+	tipo_lavado VARCHAR(100) NOT NULL,
+	rol VARCHAR(100) NOT NULL,
+	cantidad INT NOT NULL,
 );
 
 CREATE TABLE lavacar.producto(
