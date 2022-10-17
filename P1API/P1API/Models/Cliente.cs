@@ -8,6 +8,8 @@ namespace P1API.Models
         public Cliente()
         {
             Cita = new HashSet<Citum>();
+            DirClientes = new HashSet<DirCliente>();
+            TelClientes = new HashSet<TelCliente>();
         }
 
         public int Cedula { get; set; }
@@ -17,5 +19,7 @@ namespace P1API.Models
         public string? Correo { get; set; }
 
         public virtual ICollection<Citum> Cita { get; set; }
+        public virtual ICollection<DirCliente> DirClientes { get; set; }
+        public virtual ICollection<TelCliente> TelClientes { get; set; }
     }
 }

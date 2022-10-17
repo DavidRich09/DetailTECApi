@@ -54,9 +54,7 @@ namespace P1API.Models
                     .HasColumnType("date")
                     .HasColumnName("fecha");
 
-                entity.Property(e => e.CedCliente)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("ced_cliente");
+                entity.Property(e => e.CedCliente).HasColumnName("ced_cliente");
 
                 entity.Property(e => e.CedEmpleado).HasColumnName("ced_empleado");
 
@@ -73,7 +71,6 @@ namespace P1API.Models
                 entity.HasOne(d => d.CedClienteNavigation)
                     .WithMany(p => p.Cita)
                     .HasForeignKey(d => d.CedCliente)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ClienteCorr");
 
                 entity.HasOne(d => d.CedEmpleadoNavigation)
@@ -95,14 +92,16 @@ namespace P1API.Models
             modelBuilder.Entity<Cliente>(entity =>
             {
                 entity.HasKey(e => e.Cedula)
-                    .HasName("PK__cliente__415B7BE4C79011B3");
+                    .HasName("PK__cliente__415B7BE4BF5272D2");
 
                 entity.ToTable("cliente", "lavacar");
 
-                entity.HasIndex(e => e.CPassword, "UQ__cliente__0808A843B3CBA9C0")
+                entity.HasIndex(e => e.CPassword, "UQ__cliente__0808A843A015B81A")
                     .IsUnique();
 
-                entity.Property(e => e.Cedula).HasColumnName("cedula");
+                entity.Property(e => e.Cedula)
+                    .ValueGeneratedNever()
+                    .HasColumnName("cedula");
 
                 entity.Property(e => e.CPassword)
                     .HasMaxLength(100)
@@ -127,21 +126,20 @@ namespace P1API.Models
 
             modelBuilder.Entity<DirCliente>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.Direccion, e.CedCliente })
+                    .HasName("PK_dirsc");
 
                 entity.ToTable("dir_cliente", "lavacar");
-
-                entity.Property(e => e.CedCliente)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("ced_cliente");
 
                 entity.Property(e => e.Direccion)
                     .HasMaxLength(225)
                     .IsUnicode(false)
                     .HasColumnName("direccion");
 
+                entity.Property(e => e.CedCliente).HasColumnName("ced_cliente");
+
                 entity.HasOne(d => d.CedClienteNavigation)
-                    .WithMany()
+                    .WithMany(p => p.DirClientes)
                     .HasForeignKey(d => d.CedCliente)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_dirs_clientes");
@@ -150,7 +148,7 @@ namespace P1API.Models
             modelBuilder.Entity<Lavado>(entity =>
             {
                 entity.HasKey(e => e.TipoLavado)
-                    .HasName("PK__lavado__170DE4AA3178D72F");
+                    .HasName("PK__lavado__170DE4AA6B68A93F");
 
                 entity.ToTable("lavado", "lavacar");
 
@@ -175,23 +173,27 @@ namespace P1API.Models
 
             modelBuilder.Entity<PersonalLavado>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.TipoLavado, e.Rol })
+                    .HasName("PK_PersonalLavado");
 
                 entity.ToTable("personal_lavado", "lavacar");
-
-                entity.Property(e => e.Rol)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("rol");
 
                 entity.Property(e => e.TipoLavado)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("tipo_lavado");
 
+                entity.Property(e => e.Rol)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("rol");
+
+                entity.Property(e => e.Cantidad).HasColumnName("cantidad");
+
                 entity.HasOne(d => d.TipoLavadoNavigation)
-                    .WithMany()
+                    .WithMany(p => p.PersonalLavados)
                     .HasForeignKey(d => d.TipoLavado)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_RolLavado");
             });
 
@@ -238,11 +240,13 @@ namespace P1API.Models
             modelBuilder.Entity<Proveedor>(entity =>
             {
                 entity.HasKey(e => e.CedJuridica)
-                    .HasName("PK__proveedo__E9A100CEC99CB02D");
+                    .HasName("PK__proveedo__E9A100CEE048EE30");
 
                 entity.ToTable("proveedor", "lavacar");
 
-                entity.Property(e => e.CedJuridica).HasColumnName("ced_juridica");
+                entity.Property(e => e.CedJuridica)
+                    .ValueGeneratedNever()
+                    .HasColumnName("ced_juridica");
 
                 entity.Property(e => e.Contacto).HasColumnName("contacto");
 
@@ -265,7 +269,7 @@ namespace P1API.Models
             modelBuilder.Entity<Sucursal>(entity =>
             {
                 entity.HasKey(e => e.Nombre)
-                    .HasName("PK__sucursal__72AFBCC7BC7460F3");
+                    .HasName("PK__sucursal__72AFBCC719E76C54");
 
                 entity.ToTable("sucursal", "lavacar");
 
@@ -299,9 +303,7 @@ namespace P1API.Models
                     .IsUnicode(false)
                     .HasColumnName("provincia");
 
-                entity.Property(e => e.Telefono)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("telefono");
+                entity.Property(e => e.Telefono).HasColumnName("telefono");
 
                 entity.HasOne(d => d.CedGerenteNavigation)
                     .WithMany(p => p.Sucursals)
@@ -311,18 +313,17 @@ namespace P1API.Models
 
             modelBuilder.Entity<TelCliente>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.Telefono, e.CedCliente })
+                    .HasName("PK_telsc");
 
                 entity.ToTable("tel_cliente", "lavacar");
 
-                entity.Property(e => e.CedCliente)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("ced_cliente");
-
                 entity.Property(e => e.Telefono).HasColumnName("telefono");
 
+                entity.Property(e => e.CedCliente).HasColumnName("ced_cliente");
+
                 entity.HasOne(d => d.CedClienteNavigation)
-                    .WithMany()
+                    .WithMany(p => p.TelClientes)
                     .HasForeignKey(d => d.CedCliente)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tels_clientes");
@@ -331,14 +332,16 @@ namespace P1API.Models
             modelBuilder.Entity<Trabajador>(entity =>
             {
                 entity.HasKey(e => e.Cedula)
-                    .HasName("PK__Trabajad__415B7BE40DB8918C");
+                    .HasName("PK__Trabajad__415B7BE4D2875749");
 
                 entity.ToTable("Trabajador", "lavacar");
 
-                entity.HasIndex(e => e.TPassword, "UQ__Trabajad__8D1A7DC2176E0202")
+                entity.HasIndex(e => e.TPassword, "UQ__Trabajad__8D1A7DC2E1A4D750")
                     .IsUnique();
 
-                entity.Property(e => e.Cedula).HasColumnName("cedula");
+                entity.Property(e => e.Cedula)
+                    .ValueGeneratedNever()
+                    .HasColumnName("cedula");
 
                 entity.Property(e => e.Apellidos)
                     .HasMaxLength(100)

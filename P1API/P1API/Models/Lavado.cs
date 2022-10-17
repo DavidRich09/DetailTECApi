@@ -8,6 +8,7 @@ namespace P1API.Models
         public Lavado()
         {
             Cita = new HashSet<Citum>();
+            PersonalLavados = new HashSet<PersonalLavado>();
             Productos = new HashSet<Producto>();
         }
 
@@ -19,6 +20,7 @@ namespace P1API.Models
         public int? PuntosRedimir { get; set; }
 
         public virtual ICollection<Citum> Cita { get; set; }
+        public virtual ICollection<PersonalLavado> PersonalLavados { get; set; }
         public virtual ICollection<Producto> Productos { get; set; }
     }
 }

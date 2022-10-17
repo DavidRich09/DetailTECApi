@@ -14,7 +14,7 @@ namespace P1API.Models
         public string? Provincia { get; set; }
         public string? Canton { get; set; }
         public string? Distrito { get; set; }
-        public int Telefono { get; set; }
+        public int? Telefono { get; set; }
         public DateTime? InicioGerente { get; set; }
         public DateTime? Apertura { get; set; }
         public int? CedGerente { get; set; }
