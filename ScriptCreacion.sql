@@ -2,7 +2,7 @@ CREATE SCHEMA lavacar;
 go
 
 CREATE TABLE lavacar.Trabajador(
-	cedula INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
+	cedula INT NOT NULL PRIMARY KEY,
 	nombre VARCHAR(100),
 	apellidos VARCHAR(100),
 	t_password VARCHAR(100),
@@ -19,14 +19,14 @@ CREATE TABLE lavacar.sucursal(
 	provincia VARCHAR(100),
 	canton VARCHAR(100),
 	distrito VARCHAR(100),
-	telefono INT IDENTITY (1,1),
+	telefono INT,
 	inicio_gerente DATE,
 	apertura DATE,
 	ced_gerente INT,
 );
 
 CREATE TABLE lavacar.proveedor(
-	ced_juridica INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
+	ced_juridica INT NOT NULL PRIMARY KEY,
 	nombre VARCHAR(100),
 	contacto INT,
 	correo VARCHAR(100),
@@ -34,7 +34,7 @@ CREATE TABLE lavacar.proveedor(
 );
 
 CREATE TABLE lavacar.cliente(
-	cedula INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
+	cedula INT NOT NULL PRIMARY KEY,
 	nombre VARCHAR(100),
 	usuario VARCHAR(100),
 	c_password VARCHAR(100),
@@ -44,12 +44,12 @@ CREATE TABLE lavacar.cliente(
 
 CREATE TABLE lavacar.dir_cliente(
 	direccion VARCHAR(225) NOT NULL,
-	ced_cliente INT IDENTITY (1,1),
+	ced_cliente INT NOT NULL,
 );
 
 CREATE TABLE lavacar.tel_cliente(
 	telefono INT NOT NULL,
-	ced_cliente INT IDENTITY (1,1),
+	ced_cliente INT NOT NULL,
 );
 
 CREATE TABLE lavacar.cita(
@@ -58,7 +58,7 @@ CREATE TABLE lavacar.cita(
 	tipo_lavado VARCHAR(100),
 	sucursal VARCHAR(100),
 	ced_empleado INT,
-	ced_cliente INT IDENTITY (1,1),
+	ced_cliente INT,
 );
 
 CREATE TABLE lavacar.lavado(

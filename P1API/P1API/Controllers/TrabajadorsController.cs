@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using P1API.Models;
 
+//Crear un controlador para cada tabla, no para operaciones especificas.
+
 namespace P1API.Controllers
 {
     [Route("[controller]")]
@@ -22,8 +24,9 @@ namespace P1API.Controllers
             this.context = context;
         }
 
-        // GET: Trabajadors
+        
         [HttpGet]
+        [Route("getAllWorkers")]
         public string GetTrabajadores()
         {
             List<Trabajador> lista = context.Trabajadors.ToList();
@@ -31,8 +34,8 @@ namespace P1API.Controllers
             return output;
         }
 
-        // GET: Trabajadors/Create
         [HttpPost]
+        [Route("saveWorker")]
         public ActionResult Post([FromBody] Trabajador value)
         {
             try
