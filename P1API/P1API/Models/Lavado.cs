@@ -9,7 +9,6 @@ namespace P1API.Models
         {
             Cita = new HashSet<Citum>();
             PersonalLavados = new HashSet<PersonalLavado>();
-            Productos = new HashSet<Producto>();
         }
 
         public string TipoLavado { get; set; } = null!;
@@ -21,6 +20,5 @@ namespace P1API.Models
 
         public virtual ICollection<Citum> Cita { get; set; }
         public virtual ICollection<PersonalLavado> PersonalLavados { get; set; }
-        public virtual ICollection<Producto> Productos { get; set; }
     }
 }

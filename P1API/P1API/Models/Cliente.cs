@@ -17,6 +17,8 @@ namespace P1API.Models
         public string? Usuario { get; set; }
         public string? CPassword { get; set; }
         public string? Correo { get; set; }
+        public int? Puntos { get; set; }
+        public int? PuntosRedimidos { get; set; }
 
         public virtual ICollection<Citum> Cita { get; set; }
         public virtual ICollection<DirCliente> DirClientes { get; set; }

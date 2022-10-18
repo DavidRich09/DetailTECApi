@@ -79,8 +79,12 @@ CREATE TABLE lavacar.producto(
 	nombre VARCHAR(100) NOT NULL,
 	marca VARCHAR(100) NOT NULL,
 	costo INT,
-	ced_proveedor INT IDENTITY (1,1),
-	tipo_lavado VARCHAR(100),
+);
+
+CREATE TABLE lavacar.proveedor_producto(
+	nombre VARCHAR(100) NOT NULL,
+	marca VARCHAR(100) NOT NULL,
+	ced_proveedor INT NOT NULL,
 );
 
 

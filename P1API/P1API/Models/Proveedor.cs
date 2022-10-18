@@ -7,7 +7,7 @@ namespace P1API.Models
     {
         public Proveedor()
         {
-            Productos = new HashSet<Producto>();
+            ProveedorProductos = new HashSet<ProveedorProducto>();
         }
 
         public int CedJuridica { get; set; }
@@ -16,6 +16,6 @@ namespace P1API.Models
         public string? Correo { get; set; }
         public string? Direccion { get; set; }
 
-        public virtual ICollection<Producto> Productos { get; set; }
+        public virtual ICollection<ProveedorProducto> ProveedorProductos { get; set; }
     }
 }

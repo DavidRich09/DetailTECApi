@@ -23,6 +23,7 @@ namespace P1API.Models
         public virtual DbSet<PersonalLavado> PersonalLavados { get; set; } = null!;
         public virtual DbSet<Producto> Productos { get; set; } = null!;
         public virtual DbSet<Proveedor> Proveedors { get; set; } = null!;
+        public virtual DbSet<ProveedorProducto> ProveedorProductos { get; set; } = null!;
         public virtual DbSet<Sucursal> Sucursals { get; set; } = null!;
         public virtual DbSet<TelCliente> TelClientes { get; set; } = null!;
         public virtual DbSet<Trabajador> Trabajadors { get; set; } = null!;
@@ -31,8 +32,8 @@ namespace P1API.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("server=localhost\\SQLEXPRESS; database=DetailTEC; integrated security=true;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("server=localhost\\SQLEXPRESS; database=DetailTEC; integrated security=true;");
             }
         }
 
@@ -92,11 +93,11 @@ namespace P1API.Models
             modelBuilder.Entity<Cliente>(entity =>
             {
                 entity.HasKey(e => e.Cedula)
-                    .HasName("PK__cliente__415B7BE4BF5272D2");
+                    .HasName("PK__cliente__415B7BE48ABCF431");
 
                 entity.ToTable("cliente", "lavacar");
 
-                entity.HasIndex(e => e.CPassword, "UQ__cliente__0808A843A015B81A")
+                entity.HasIndex(e => e.Usuario, "UQ__cliente__9AFF8FC602628F81")
                     .IsUnique();
 
                 entity.Property(e => e.Cedula)
@@ -117,6 +118,10 @@ namespace P1API.Models
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("nombre");
+
+                entity.Property(e => e.Puntos).HasColumnName("puntos");
+
+                entity.Property(e => e.PuntosRedimidos).HasColumnName("puntos_redimidos");
 
                 entity.Property(e => e.Usuario)
                     .HasMaxLength(100)
@@ -148,7 +153,7 @@ namespace P1API.Models
             modelBuilder.Entity<Lavado>(entity =>
             {
                 entity.HasKey(e => e.TipoLavado)
-                    .HasName("PK__lavado__170DE4AA6B68A93F");
+                    .HasName("PK__lavado__170DE4AA2526558F");
 
                 entity.ToTable("lavado", "lavacar");
 
@@ -199,7 +204,7 @@ namespace P1API.Models
 
             modelBuilder.Entity<Producto>(entity =>
             {
-                entity.HasKey(e => new { e.Nombre, e.Marca, e.CedProveedor })
+                entity.HasKey(e => new { e.Nombre, e.Marca })
                     .HasName("PK_Productos");
 
                 entity.ToTable("producto", "lavacar");
@@ -214,33 +219,13 @@ namespace P1API.Models
                     .IsUnicode(false)
                     .HasColumnName("marca");
 
-                entity.Property(e => e.CedProveedor)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("ced_proveedor");
-
                 entity.Property(e => e.Costo).HasColumnName("costo");
-
-                entity.Property(e => e.TipoLavado)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("tipo_lavado");
-
-                entity.HasOne(d => d.CedProveedorNavigation)
-                    .WithMany(p => p.Productos)
-                    .HasForeignKey(d => d.CedProveedor)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CedProveedor");
-
-                entity.HasOne(d => d.TipoLavadoNavigation)
-                    .WithMany(p => p.Productos)
-                    .HasForeignKey(d => d.TipoLavado)
-                    .HasConstraintName("FK_TipoLavadoProd");
             });
 
             modelBuilder.Entity<Proveedor>(entity =>
             {
                 entity.HasKey(e => e.CedJuridica)
-                    .HasName("PK__proveedo__E9A100CEE048EE30");
+                    .HasName("PK__proveedo__E9A100CE1E8FBC8B");
 
                 entity.ToTable("proveedor", "lavacar");
 
@@ -266,10 +251,36 @@ namespace P1API.Models
                     .HasColumnName("nombre");
             });
 
+            modelBuilder.Entity<ProveedorProducto>(entity =>
+            {
+                entity.HasKey(e => new { e.Nombre, e.Marca, e.CedProveedor })
+                    .HasName("PK_ProvProd");
+
+                entity.ToTable("proveedor_producto", "lavacar");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+
+                entity.Property(e => e.Marca)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("marca");
+
+                entity.Property(e => e.CedProveedor).HasColumnName("ced_proveedor");
+
+                entity.HasOne(d => d.CedProveedorNavigation)
+                    .WithMany(p => p.ProveedorProductos)
+                    .HasForeignKey(d => d.CedProveedor)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ProvProd");
+            });
+
             modelBuilder.Entity<Sucursal>(entity =>
             {
                 entity.HasKey(e => e.Nombre)
-                    .HasName("PK__sucursal__72AFBCC719E76C54");
+                    .HasName("PK__sucursal__72AFBCC7752228C4");
 
                 entity.ToTable("sucursal", "lavacar");
 
@@ -332,12 +343,9 @@ namespace P1API.Models
             modelBuilder.Entity<Trabajador>(entity =>
             {
                 entity.HasKey(e => e.Cedula)
-                    .HasName("PK__Trabajad__415B7BE4D2875749");
+                    .HasName("PK__Trabajad__415B7BE4F1D6D62F");
 
                 entity.ToTable("Trabajador", "lavacar");
-
-                entity.HasIndex(e => e.TPassword, "UQ__Trabajad__8D1A7DC2E1A4D750")
-                    .IsUnique();
 
                 entity.Property(e => e.Cedula)
                     .ValueGeneratedNever()
