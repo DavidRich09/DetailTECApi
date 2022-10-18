@@ -20,6 +20,7 @@ namespace P1API.Models
         public virtual DbSet<Cliente> Clientes { get; set; } = null!;
         public virtual DbSet<DirCliente> DirClientes { get; set; } = null!;
         public virtual DbSet<Lavado> Lavados { get; set; } = null!;
+        public virtual DbSet<LavadoProducto> LavadoProductos { get; set; } = null!;
         public virtual DbSet<PersonalLavado> PersonalLavados { get; set; } = null!;
         public virtual DbSet<Producto> Productos { get; set; } = null!;
         public virtual DbSet<Proveedor> Proveedors { get; set; } = null!;
@@ -93,11 +94,11 @@ namespace P1API.Models
             modelBuilder.Entity<Cliente>(entity =>
             {
                 entity.HasKey(e => e.Cedula)
-                    .HasName("PK__cliente__415B7BE48ABCF431");
+                    .HasName("PK__cliente__415B7BE43C416FA1");
 
                 entity.ToTable("cliente", "lavacar");
 
-                entity.HasIndex(e => e.Usuario, "UQ__cliente__9AFF8FC602628F81")
+                entity.HasIndex(e => e.Usuario, "UQ__cliente__9AFF8FC6B55E42E6")
                     .IsUnique();
 
                 entity.Property(e => e.Cedula)
@@ -153,7 +154,7 @@ namespace P1API.Models
             modelBuilder.Entity<Lavado>(entity =>
             {
                 entity.HasKey(e => e.TipoLavado)
-                    .HasName("PK__lavado__170DE4AA2526558F");
+                    .HasName("PK__lavado__170DE4AA4FAC7024");
 
                 entity.ToTable("lavado", "lavacar");
 
@@ -174,6 +175,43 @@ namespace P1API.Models
                 entity.Property(e => e.PuntosOtorga).HasColumnName("puntos_otorga");
 
                 entity.Property(e => e.PuntosRedimir).HasColumnName("puntos_redimir");
+            });
+
+            modelBuilder.Entity<LavadoProducto>(entity =>
+            {
+                entity.HasKey(e => new { e.Nombre, e.Marca, e.TipoLavado })
+                    .HasName("PK_LavProd");
+
+                entity.ToTable("lavado_producto", "lavacar");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+
+                entity.Property(e => e.Marca)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("marca");
+
+                entity.Property(e => e.TipoLavado)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("tipo_lavado");
+
+                entity.Property(e => e.Cantidad).HasColumnName("cantidad");
+
+                entity.HasOne(d => d.TipoLavadoNavigation)
+                    .WithMany(p => p.LavadoProductos)
+                    .HasForeignKey(d => d.TipoLavado)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ProdLav");
+
+                entity.HasOne(d => d.Producto)
+                    .WithMany(p => p.LavadoProductos)
+                    .HasForeignKey(d => new { d.Nombre, d.Marca })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ProdLav2");
             });
 
             modelBuilder.Entity<PersonalLavado>(entity =>
@@ -220,12 +258,17 @@ namespace P1API.Models
                     .HasColumnName("marca");
 
                 entity.Property(e => e.Costo).HasColumnName("costo");
+
+                entity.Property(e => e.TipoLavado)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("tipo_lavado");
             });
 
             modelBuilder.Entity<Proveedor>(entity =>
             {
                 entity.HasKey(e => e.CedJuridica)
-                    .HasName("PK__proveedo__E9A100CE1E8FBC8B");
+                    .HasName("PK__proveedo__E9A100CE587D9E97");
 
                 entity.ToTable("proveedor", "lavacar");
 
@@ -280,7 +323,7 @@ namespace P1API.Models
             modelBuilder.Entity<Sucursal>(entity =>
             {
                 entity.HasKey(e => e.Nombre)
-                    .HasName("PK__sucursal__72AFBCC7752228C4");
+                    .HasName("PK__sucursal__72AFBCC7609255BC");
 
                 entity.ToTable("sucursal", "lavacar");
 
@@ -343,7 +386,7 @@ namespace P1API.Models
             modelBuilder.Entity<Trabajador>(entity =>
             {
                 entity.HasKey(e => e.Cedula)
-                    .HasName("PK__Trabajad__415B7BE4F1D6D62F");
+                    .HasName("PK__Trabajad__415B7BE4C83D1B1E");
 
                 entity.ToTable("Trabajador", "lavacar");
 

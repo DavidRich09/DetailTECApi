@@ -42,7 +42,7 @@ ADD CONSTRAINT FK_RolLavado FOREIGN KEY (tipo_lavado)
 REFERENCES lavacar.lavado (tipo_lavado);
 
 ALTER TABLE lavacar.personal_lavado
-ADD CONSTRAINT PK_PersonalLavado PRIMARY KEY (tipo_lavado,rol)
+ADD CONSTRAINT PK_PersonalLavado PRIMARY KEY (tipo_lavado,rol);
 
 ALTER TABLE lavacar.producto
 ADD CONSTRAINT PK_Productos PRIMARY KEY (nombre,marca);
@@ -53,3 +53,14 @@ REFERENCES lavacar.proveedor (ced_juridica);
 
 ALTER TABLE lavacar.proveedor_producto
 ADD CONSTRAINT PK_ProvProd PRIMARY KEY (nombre,marca,ced_proveedor);
+
+ALTER TABLE lavacar.lavado_producto
+ADD CONSTRAINT FK_ProdLav FOREIGN KEY (tipo_lavado)
+REFERENCES lavacar.lavado (tipo_lavado);
+
+ALTER TABLE lavacar.lavado_producto
+ADD CONSTRAINT FK_ProdLav2 FOREIGN KEY (nombre,marca)
+REFERENCES lavacar.producto (nombre,marca);
+
+ALTER TABLE lavacar.lavado_producto
+ADD CONSTRAINT PK_LavProd PRIMARY KEY (nombre,marca,tipo_lavado);

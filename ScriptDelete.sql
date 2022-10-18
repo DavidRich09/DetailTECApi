@@ -1,5 +1,6 @@
 use DetailTEC;
 
+DROP TABLE IF EXISTS lavacar.lavado_producto;
 DROP TABLE IF EXISTS lavacar.proveedor_producto;
 DROP TABLE IF EXISTS lavacar.producto;
 DROP TABLE IF EXISTS lavacar.personal_lavado;

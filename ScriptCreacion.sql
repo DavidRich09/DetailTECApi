@@ -38,7 +38,9 @@ CREATE TABLE lavacar.cliente(
 	usuario VARCHAR(100),
 	c_password VARCHAR(100),
 	correo VARCHAR(100),
-	UNIQUE (c_password),
+	puntos INT,
+	puntos_redimidos INT,
+	UNIQUE (usuario),
 );
 
 CREATE TABLE lavacar.dir_cliente(
@@ -79,12 +81,20 @@ CREATE TABLE lavacar.producto(
 	nombre VARCHAR(100) NOT NULL,
 	marca VARCHAR(100) NOT NULL,
 	costo INT,
+	tipo_lavado VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE lavacar.proveedor_producto(
 	nombre VARCHAR(100) NOT NULL,
 	marca VARCHAR(100) NOT NULL,
 	ced_proveedor INT NOT NULL,
+);
+
+CREATE TABLE lavacar.lavado_producto(
+	nombre VARCHAR(100) NOT NULL,
+	marca VARCHAR(100) NOT NULL,
+	tipo_lavado VARCHAR(100) NOT NULL,
+	cantidad INT,
 );
 
 
