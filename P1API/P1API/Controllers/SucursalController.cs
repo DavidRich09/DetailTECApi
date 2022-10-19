@@ -35,6 +35,19 @@ namespace P1API.Controllers
         }
 
 
+        [HttpGet]
+        [Route("getNamesOffices")]
+        public dynamic GetNames()
+        {
+            
+            var names = context.Sucursals.Select(x => x.Nombre).ToList();
+            return new
+            {
+                data = names
+            };
+
+        }
+
 
 
     }

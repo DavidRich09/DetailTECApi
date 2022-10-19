@@ -27,7 +27,6 @@ namespace P1API.Controllers
 
         [HttpPost]
         [Route("saveWash")]
-
         public ActionResult SaveWash([FromBody] Lavado lavado)
         {
             try
@@ -41,5 +40,17 @@ namespace P1API.Controllers
                 return BadRequest();
             }
         }
+        
+        [HttpGet]
+        [Route("getNamesWash")]
+        public dynamic getNamesWash()
+        {
+            var names = context.Lavados.Select(x => x.TipoLavado).ToList();
+            return new
+            {
+                data = names
+            };
+        }
+        
     }
 }
