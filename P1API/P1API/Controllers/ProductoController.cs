@@ -40,11 +40,15 @@ namespace P1API.Controllers
         [Route("GetNamesProducts")]
         public dynamic GetNamesProducts()
         {
-            var products = context.Productos.Select(x => x.Nombre).ToList();
+            //hacer un select a la tabla productos de nombre y marca en forma de lista
+            
+            var products = context.Productos.Select(p => new {p.Nombre, p.Marca}).ToList();
+
             return new
             {
                 data = products
             };
+
         }
         
     }
