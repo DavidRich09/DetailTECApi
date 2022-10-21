@@ -21,20 +21,54 @@ namespace P1API.Controllers
         
         [HttpPost]
         [Route("saveLavadoProducto")]
-        public dynamic saveLavadoProducto([FromBody] LavadoProducto lavadoProducto)
+        public dynamic saveLavadoProducto()
         {
             try
             {
-                context.Add(lavadoProducto);
+                context.LavadoProductos.Add(new LavadoProducto
+                {
+                    Nombre = "vv",
+                    Marca = "vv",
+                    TipoLavado = "try2",
+                    Cantidad = 1
+                });
                 context.SaveChanges();
                 return new { status = "ok" };
             }
             catch (Exception ex)
             {
-                return new { status = "error", message = ex.Message };
+                return new { status = "error" };
             }
         }
-
-
+        
+        [HttpPost]
+        [Route("saveLavadoProductoList")]
+        public dynamic saveLavadoProductoList([FromBody] List<LavadoProductoAux> lavadoProductos)
+        {
+            try
+            {
+                //recorrer la lista de lavadoProductos
+                foreach (LavadoProductoAux lavadoProducto in lavadoProductos)
+                {
+                    context.LavadoProductos.Add(new LavadoProducto
+                    {
+                        Nombre = lavadoProducto.Nombre,
+                        Marca = lavadoProducto.Marca,
+                        TipoLavado = lavadoProducto.TipoLavado,
+                        Cantidad = lavadoProducto.Cantidad
+                    });
+                }
+                context.SaveChanges();
+                return new {status = "ok"};
+            } catch (Exception ex)
+            {
+                return new { status = "error" };
+            }
+            
+        }
+        
+        
     }
+    
+
 }

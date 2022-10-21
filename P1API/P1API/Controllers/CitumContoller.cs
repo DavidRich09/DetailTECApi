@@ -30,6 +30,14 @@ namespace P1API.Controllers
         {
             try
             {
+                //hacer un select de la Cedula de los trabajadores y escoger uno al azar
+                
+                var trabajador = context.Trabajadors.Select(x => x.Cedula).ToList();
+                Random rnd = new Random();
+                int index = rnd.Next(trabajador.Count);
+                
+                citum.CedEmpleado = trabajador[index];
+                
                 context.Cita.Add(citum);
                 context.SaveChanges();
                 return Ok();

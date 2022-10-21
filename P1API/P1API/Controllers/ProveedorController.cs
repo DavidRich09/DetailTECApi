@@ -38,14 +38,13 @@ namespace P1API.Controllers
         [Route("getSupplerisNames")]
         public dynamic GetNames()
         {
-            //hacer un select del nombre de la sucursal
-            var sucursales = context.Proveedors.Select(x =>  x.Nombre ).ToList();
+            //hacer un select del nombre y la ced_juridica de la sucursal
+            var sucursales = context.Proveedors.Select(x => new { x.Nombre, x.CedJuridica }).ToList();
             return new
             {
                 data = sucursales
             };
         }
-        
         
                 
         [HttpGet]

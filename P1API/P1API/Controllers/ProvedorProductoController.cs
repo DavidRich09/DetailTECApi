@@ -20,12 +20,19 @@ namespace P1API.Controllers
         
         [HttpPost]
         [Route("saveProvedorProducto")]
-        public ActionResult saveProduct([FromBody] ProveedorProducto value)
+        public dynamic saveProduct()
         {
 
             try
             {
-                context.Add(value);
+                context.ProveedorProductos.Add(new ProveedorProducto
+                {
+                    
+                    Nombre = "vv",
+                    Marca =  "vv",
+                    CedProveedor = 12312312
+
+                });
                 context.SaveChanges();
                 return Ok();
             }
@@ -34,6 +41,35 @@ namespace P1API.Controllers
                 return BadRequest();
             }
         }
-
+        
+        [HttpPost]
+        [Route("saveProvedorProductoList")]
+        public dynamic saveProductList([FromBody] List<ProveedorProductoAux> provedorProucto)
+        {
+            try
+            {
+                foreach (ProveedorProductoAux productoAux in provedorProucto)
+                {
+                    context.ProveedorProductos.Add(new ProveedorProducto
+                    {
+                        Nombre = productoAux.Nombre,
+                        Marca = productoAux.Marca,
+                        CedProveedor = productoAux.CedProveedor
+                    });
+                    
+                }
+                context.SaveChanges();
+                return new { status = "ok" };
+            }
+            catch (Exception ex)
+            {
+                return new { status = "error" };
+            }
+        }
+        
     }
+
+        
+        
+    
 }
