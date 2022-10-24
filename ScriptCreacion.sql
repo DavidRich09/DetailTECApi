@@ -81,7 +81,7 @@ CREATE TABLE lavacar.producto(
 	nombre VARCHAR(100) NOT NULL,
 	marca VARCHAR(100) NOT NULL,
 	costo INT,
-	tipo_lavado VARCHAR(100) NOT NULL
+	tipo_lavado VARCHAR(100)
 );
 
 CREATE TABLE lavacar.proveedor_producto(

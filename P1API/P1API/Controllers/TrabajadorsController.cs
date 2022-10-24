@@ -49,5 +49,32 @@ namespace P1API.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        [Route("getWorker/{id}")]
+
+        public string GetWorker(string id)
+        {
+            List<Trabajador> lista = context.Trabajadors.ToList();
+            Trabajador t = null;
+
+            for (int i = 0; i < lista.Count; i++)
+            {
+                if (lista[i].Cedula.ToString() == id)
+                {
+                    t = lista[i];
+                }
+            }
+
+            if (t == null)
+            {
+                return null;
+            }
+            else
+            {
+                string output = JsonConvert.SerializeObject(t, Formatting.Indented);
+                return output;
+            }
+        }
     }
 }

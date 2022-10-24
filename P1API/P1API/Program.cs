@@ -48,4 +48,4 @@ app.UseCors();
 
 app.Run();
 
-// Scaffold-DbContext "server=localhost\SQLEXPRESS; database=DetailTEC; integrated security=true;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models
+// Scaffold-DbContext "server=localhost\SQLEXPRESS; database=DetailTEC; integrated security=true;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models -Force

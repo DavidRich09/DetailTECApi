@@ -103,7 +103,32 @@ namespace P1API.Controllers
                 return new { data = "error" };
             }
         }
-        
+
+        [HttpGet]
+        [Route("getClient/{usuario}")]
+        public string GetClient(string usuario)
+        {
+            List<Cliente> listaTotal = context.Clientes.ToList();
+            Cliente cliente = null;
+
+            for (int i = 0; i < listaTotal.Count; i++)
+            {
+                if (listaTotal[i].Usuario == usuario)
+                {
+                    cliente = listaTotal[i];
+                    break;
+                }
+            }
+
+            if (cliente == null)
+            {
+                return null;
+            } else
+            {
+                string output = JsonConvert.SerializeObject(cliente, Formatting.Indented);
+                return output;
+            }
+        }
 
     }
 }
