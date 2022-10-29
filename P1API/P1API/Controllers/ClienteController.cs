@@ -69,6 +69,9 @@ namespace P1API.Controllers
         
         [HttpPost]
         [Route("saveClientAdmin")]
+        /**
+         * Este metodo es para guardar un cliente desde el admin y enviar un correo
+         */
         public ActionResult PostAdmin([FromBody] Cliente c)
         {
 
@@ -98,7 +101,9 @@ namespace P1API.Controllers
             }
         }
 
-        
+        /**
+         * Envia un correo con la contraseña del cliente
+         */
         protected void SendEmail(Cliente c)
         {
             string txtEmail = "mooncake1231231231231@gmail.com";
@@ -123,6 +128,9 @@ namespace P1API.Controllers
         
         [HttpPost]
         [Route("saveClienteTelList")]
+        /**
+         * Metodo para guardar los telefonos de un cliente
+         */
         public dynamic Post([FromBody] List<TelClienteAux> listTelClient)
         {
             try
@@ -148,6 +156,11 @@ namespace P1API.Controllers
         
         [HttpPost]
         [Route("saveClienteDirList")]
+        
+        /**
+         * Metodo para guardar las dirreciones de un cliente
+         */
+        
         public dynamic Post([FromBody] List<DirClienteAux> listDirClient)
         {
             try
@@ -170,6 +183,11 @@ namespace P1API.Controllers
                 return new { data = "error" };
             }
         }
+        
+        
+        /**
+         * Retorna un cliente por su cedula
+         */
 
         [HttpGet]
         [Route("getClient/{usuario}")]

@@ -36,6 +36,9 @@ namespace P1API.Controllers
 
         [HttpPost]
         [Route("saveWorker")]
+        /**
+         * Guarda un trabajador en la base de datos
+         */
         public ActionResult Post([FromBody] Trabajador value)
         {
             try
@@ -52,6 +55,9 @@ namespace P1API.Controllers
 
         [HttpGet]
         [Route("getWorker/{id}")]
+        /**
+         * retorna un trabajador por su id
+         */
 
         public string GetWorker(string id)
         {

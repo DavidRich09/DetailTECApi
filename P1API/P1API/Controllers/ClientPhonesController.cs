@@ -17,7 +17,9 @@ namespace P1API.Controllers
 
         [HttpGet]
         [Route("getClientPhones/{ced}")]
-        
+        /**
+         * Retorna los telefonos de un cliente
+         */
         public string GetPhones(string ced)
         {
             List<Cliente> listaTotal = context.Clientes.ToList();
@@ -43,6 +45,7 @@ namespace P1API.Controllers
 
         [HttpPost]
         [Route("saveClientPhone")]
+        
         public ActionResult SavePhone([FromBody] TelCliente tel)
         {
             try
