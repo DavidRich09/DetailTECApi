@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using P1API.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -16,9 +17,21 @@ namespace P1API.Controllers
         {
             this.context = context;
         }
+        [HttpGet]
+        [Route("getAllOffices")]
+
+        public string GetOffices()
+        {
+            List<Sucursal> lista = context.Sucursals.ToList();
+            string output = JsonConvert.SerializeObject(lista.ToArray(), Formatting.Indented);
+            return output;
+        }
 
         [HttpPost]
         [Route("saveOffice")]
+        /**
+         * Guarda una sucursal en la base de datos
+         */
         public ActionResult Post([FromBody] Sucursal value)
         {
 
@@ -37,6 +50,9 @@ namespace P1API.Controllers
 
         [HttpGet]
         [Route("getNamesOffices")]
+        /**
+         * Obtiene los nombres de las sucursales
+         */
         public dynamic GetNames()
         {
             

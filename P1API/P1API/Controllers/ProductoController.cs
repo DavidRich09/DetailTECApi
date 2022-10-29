@@ -21,6 +21,10 @@ namespace P1API.Controllers
         
         [HttpPost]
         [Route("saveProduct")]
+        
+        /**
+         * Salva un producto en la base de datos
+         */
         public ActionResult saveProduct([FromBody] Producto producto)
         {
             try
@@ -38,6 +42,9 @@ namespace P1API.Controllers
         
         [HttpGet]
         [Route("GetNamesProducts")]
+        /**
+         * Metodo que retorna los nombres  y la marca de los productos
+         */
         public dynamic GetNamesProducts()
         {
             //hacer un select a la tabla productos de nombre y marca en forma de lista

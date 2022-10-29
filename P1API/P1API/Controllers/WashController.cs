@@ -14,6 +14,15 @@ namespace P1API.Controllers
         {
             this.context = context;
         }
+        [HttpGet]
+        [Route("getAllWashes")]
+
+        public string GetWashes()
+        {
+            List<Lavado> lista = context.Lavados.ToList();
+            string output = JsonConvert.SerializeObject(lista.ToArray(), Formatting.Indented);
+            return output;
+        }
 
         [HttpPost]
         [Route("getAllWashT")]
@@ -27,6 +36,9 @@ namespace P1API.Controllers
 
         [HttpPost]
         [Route("saveWash")]
+        /**
+         * Guarda un lavado
+         */
         public ActionResult SaveWash([FromBody] Lavado lavado)
         {
             try
@@ -43,6 +55,9 @@ namespace P1API.Controllers
         
         [HttpGet]
         [Route("getNamesWash")]
+        /**
+         * Retorna los nombres de los lavados
+         */
         public dynamic getNamesWash()
         {
             var names = context.Lavados.Select(x => x.TipoLavado).ToList();

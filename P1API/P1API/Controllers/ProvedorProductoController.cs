@@ -18,32 +18,13 @@ namespace P1API.Controllers
 
         }
         
-        [HttpPost]
-        [Route("saveProvedorProducto")]
-        public dynamic saveProduct()
-        {
-
-            try
-            {
-                context.ProveedorProductos.Add(new ProveedorProducto
-                {
-                    
-                    Nombre = "vv",
-                    Marca =  "vv",
-                    CedProveedor = 12312312
-
-                });
-                context.SaveChanges();
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
         
         [HttpPost]
         [Route("saveProvedorProductoList")]
+        
+        /**
+         * Metodo que permite guardar una lista de productos de un proveedor
+         */
         public dynamic saveProductList([FromBody] List<ProveedorProductoAux> provedorProucto)
         {
             try
