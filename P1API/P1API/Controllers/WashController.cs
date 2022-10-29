@@ -14,6 +14,15 @@ namespace P1API.Controllers
         {
             this.context = context;
         }
+        [HttpGet]
+        [Route("getAllWashes")]
+
+        public string GetWashes()
+        {
+            List<Lavado> lista = context.Lavados.ToList();
+            string output = JsonConvert.SerializeObject(lista.ToArray(), Formatting.Indented);
+            return output;
+        }
 
         [HttpPost]
         [Route("getAllWashT")]
