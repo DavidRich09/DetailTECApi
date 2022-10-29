@@ -36,6 +36,9 @@ namespace P1API.Controllers
 
         [HttpPost]
         [Route("saveWash")]
+        /**
+         * Guarda un lavado
+         */
         public ActionResult SaveWash([FromBody] Lavado lavado)
         {
             try
@@ -52,6 +55,9 @@ namespace P1API.Controllers
         
         [HttpGet]
         [Route("getNamesWash")]
+        /**
+         * Retorna los nombres de los lavados
+         */
         public dynamic getNamesWash()
         {
             var names = context.Lavados.Select(x => x.TipoLavado).ToList();

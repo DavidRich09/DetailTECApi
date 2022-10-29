@@ -17,6 +17,9 @@ namespace P1API.Controllers
 
         [HttpGet]
         [Route("getAllAppointments")]
+        /**
+         * This method returns all the appointments in the database
+         */
         public string GetAppointments()
         {
             List<Citum> lista = context.Cita.ToList();
@@ -26,6 +29,9 @@ namespace P1API.Controllers
 
         [HttpPost]
         [Route("saveAppointment")]
+        /*
+         * Metodo para guardar una cita
+         */
         public ActionResult Post([FromBody] Citum citum)
         {
             try

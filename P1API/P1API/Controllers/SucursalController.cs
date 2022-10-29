@@ -29,6 +29,9 @@ namespace P1API.Controllers
 
         [HttpPost]
         [Route("saveOffice")]
+        /**
+         * Guarda una sucursal en la base de datos
+         */
         public ActionResult Post([FromBody] Sucursal value)
         {
 
@@ -47,6 +50,9 @@ namespace P1API.Controllers
 
         [HttpGet]
         [Route("getNamesOffices")]
+        /**
+         * Obtiene los nombres de las sucursales
+         */
         public dynamic GetNames()
         {
             

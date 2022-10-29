@@ -19,30 +19,14 @@ namespace P1API.Controllers
         }
         
         
-        [HttpPost]
-        [Route("saveLavadoProducto")]
-        public dynamic saveLavadoProducto()
-        {
-            try
-            {
-                context.LavadoProductos.Add(new LavadoProducto
-                {
-                    Nombre = "vv",
-                    Marca = "vv",
-                    TipoLavado = "try2",
-                    Cantidad = 1
-                });
-                context.SaveChanges();
-                return new { status = "ok" };
-            }
-            catch (Exception ex)
-            {
-                return new { status = "error" };
-            }
-        }
         
         [HttpPost]
         [Route("saveLavadoProductoList")]
+        
+        /**
+         * Metodo que recibe una lista de lavadoProducto y los guarda en la base de datos
+         */
+        
         public dynamic saveLavadoProductoList([FromBody] List<LavadoProductoAux> lavadoProductos)
         {
             try

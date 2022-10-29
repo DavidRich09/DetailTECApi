@@ -28,7 +28,9 @@ namespace P1API.Controllers
 
         [HttpGet]
         [Route("Asistente")]
-
+        /**
+         * abre el reporte de asistente
+         */
         public dynamic Asistente()
         {
             string path = Path.Combine(Directory.GetCurrentDirectory(), @"Execute\setup.exe");
