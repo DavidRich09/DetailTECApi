@@ -10,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Constructor del contexto de la base de datos
 builder.Services.AddDbContext<DetailTECContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
 
